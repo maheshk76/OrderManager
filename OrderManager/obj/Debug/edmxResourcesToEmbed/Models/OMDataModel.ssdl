@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OrderManagerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Agents">
+    <Key>
+      <PropertyRef Name="AgentCode" />
+    </Key>
+    <Property Name="AgentCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AgentName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="WorkingArea" Type="nvarchar" MaxLength="30" />
+    <Property Name="Commission" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PhoneNo" Type="nchar" MaxLength="10" />
+    <Property Name="CountryId" Type="int" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerCode" />
+    </Key>
+    <Property Name="CustomerCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="CustomerCity" Type="int" />
+    <Property Name="WorkingArea" Type="nvarchar(max)" />
+    <Property Name="CustomerCountry" Type="int" />
+    <Property Name="Grade" Type="nvarchar(max)" />
+    <Property Name="OpeningAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ReceivingAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="OutstandingAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PhoneNo" Type="nchar" MaxLength="10" />
+    <Property Name="AgentCode" Type="int" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="OrderNum" />
+    </Key>
+    <Property Name="OrderNum" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="AdvanceAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="OrderDate" Type="date" />
+    <Property Name="CustomerCode" Type="int" Nullable="false" />
+    <Property Name="OrderDescription" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK__Customer__Custom__36B12243">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="CustomerCity" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agents_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="Agents" Type="Self.Agents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Agents">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Agents">
+    <End Role="Agents" Type="Self.Agents" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agents">
+        <PropertyRef Name="AgentCode" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="AgentCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerCode" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CustomerCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OrderManagerDBModelStoreContainer">
+    <EntitySet Name="Agents" EntityType="Self.Agents" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Customer__Custom__36B12243" Association="Self.FK__Customer__Custom__36B12243">
+      <End Role="City" EntitySet="City" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Agents_Country" Association="Self.FK_Agents_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="Agents" EntitySet="Agents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Agents" Association="Self.FK_Customer_Agents">
+      <End Role="Agents" EntitySet="Agents" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Customer" Association="Self.FK_Orders_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

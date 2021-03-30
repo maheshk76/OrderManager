@@ -1,0 +1,66 @@
+﻿@model IEnumerable<OrderManager.ViewModels.AgentViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Agent Manager</h2>
+
+
+        <div class=" col-md-2 list-group">
+<a href="@Url.Action("AgentForm","Agent")" class="btn btn-primary">Add Agent</a>
+            </div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AgentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkingArea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Commission)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AgentCountry)
+        </th><th>
+            @Html.DisplayNameFor(model => model.CustCount)
+        
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgentName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkingArea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Commission)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgentCountry)
+        </td>  
+        <td>
+            @Html.DisplayFor(modelItem => item.CustCount)
+            <br />
+            @Html.ActionLink("New", "CustForm","Customer", new { agentid=item.AgentCode },null) |
+            @Html.ActionLink("List", "Index","Customer", new { agentid=item.AgentCode },null)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "AgentForm", new { id=item.AgentCode }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AgentCode })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,84 @@
+﻿
+@model IEnumerable<OrderManager.ViewModels.OrderViewModel>
+
+@{
+    ViewBag.Title = "Orderlist";
+}
+<h2>All Orders</h2>
+<hr />
+<table class="table table-bordered table-hover">
+
+
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Oops!</h4>
+            <h2>No Records found!</h2>
+            <hr />
+        </div>
+    }
+    else
+    {
+        <tr>
+         <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdvanceAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDescription)
+        </th>
+             <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+             <th>
+            @Html.DisplayNameFor(model => model.AgentName)
+        </th>
+        <th></th>
+    </tr>
+
+foreach (var item in Model) {
+    <tr>
+         <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdvanceAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgentName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.OrderNum }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.OrderNum })
+        </td>
+    </tr>
+}
+
+    }
+</table>
+
+
+
+
+
