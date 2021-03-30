@@ -11,12 +11,15 @@ namespace OrderManager.ViewModels
         [Display(Name ="CustomerName")]
         public string FullName { get; set; }
         public int OrderNum { get; set; }
+        [Required]
         public Nullable<decimal> OrderAmount { get; set; }
+        [Required]
         public Nullable<decimal> AdvanceAmount { get; set; }
+        public Nullable<decimal> OpeningAmount { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public int CustomerCode { get; set; }
         public string OrderDescription { get; set; }
-
+        
         public string City { get; set; }
         public string AgentName { get; set; }
     }

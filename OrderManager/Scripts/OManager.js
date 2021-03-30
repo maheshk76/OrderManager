@@ -11,7 +11,7 @@
     });
     $(".clear-btn").on("click", function () {
         $("#Search").val('');
-        $("#custId").val('');
+        $("#CustId").val('');
         $("#CityId").val('');
         $("#Sdate").val('');
         $("#Edate").val('');
@@ -26,7 +26,7 @@ function LoadData(buttonid=null) {
         data: {
 
             search: $("#Search").val(),
-            empId: $("#custId").val(),
+            custId: $("#CustId").val(),
             cityId: $("#CityId").val(),
             sdate: $("#Sdate").val(),
             edate: $("#Edate").val(),

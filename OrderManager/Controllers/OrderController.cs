@@ -4,6 +4,7 @@ using OrderManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -106,8 +107,13 @@ namespace OrderManager.Controllers
 
             List<OrderViewModel> OrderList = _context.Database.SqlQuery<OrderViewModel>
                 ("exec GetOrders @search,@custId,@cityId,@sdate,@edate,@pagesize,@pagenum,@possiblerows OUTPUT", parameters.ToArray()).ToList<OrderViewModel>();
-          
-                int possiblerows = Convert.ToInt32(outparam.Value);
+            int possiblerows;
+            Debug.WriteLine(outparam.Value);
+            if (outparam.Value ==DBNull.Value )
+                possiblerows = 0;
+            else
+                possiblerows = Convert.ToInt32(outparam.Value);
+
             if (possiblerows > Pagesize)
             {
                 var TotalPages = (int)Math.Ceiling((double)((decimal)possiblerows / Pagesize));
