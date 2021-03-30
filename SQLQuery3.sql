@@ -1,5 +1,5 @@
 ﻿declare @possiblerows int
-exec GetOrders '',0,0,'','',10,1,'fname','DESC', @possiblerows out;
+exec GetOrders '',0,0,'','',5,1,'fname','ASC', @possiblerows out;
 
 go
 select sum(t1.CO)

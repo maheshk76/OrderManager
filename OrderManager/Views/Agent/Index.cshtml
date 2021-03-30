@@ -12,7 +12,7 @@
             </div>
 
 <hr />
-<table class="table table-bordered table-responsive">
+<table class="table table-bordered table-responsive table-striped">
      @if (!Model.Any())
      {
         <div class="alert alert-info" role="alert">
@@ -24,6 +24,10 @@
      else
      {
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CustCount)
+        
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.AgentName)
         </th>
@@ -38,16 +42,20 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AgentCountry)
-        </th><th>
-            @Html.DisplayNameFor(model => model.CustCount)
-        
         </th>
-        <th></th>
+        <th>Actions</th>
     </tr>
 
          foreach (var item in Model)
          {
     <tr>
+        
+        <td>
+            <span id="CustCount">@Html.DisplayFor(modelItem => item.CustCount)</span>  &nbsp;
+            <span id="agact">@Html.ActionLink("New", "CustForm", "Customer", new { agentid = item.AgentCode }, null) |
+            @Html.ActionLink("My Customers", "Index", "Customer", new { agentid = item.AgentCode }, null)
+                </span>
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.AgentName)
         </td>
@@ -62,13 +70,7 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AgentCountry)
-        </td>  
-        <td>
-            @Html.DisplayFor(modelItem => item.CustCount)
-            <br />
-            @Html.ActionLink("New", "CustForm", "Customer", new { agentid = item.AgentCode }, null) |
-            @Html.ActionLink("List", "Index", "Customer", new { agentid = item.AgentCode }, null)
-        </td>
+        </td> 
         <td>
             @Html.ActionLink("Edit", "AgentForm", new { id = item.AgentCode }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.AgentCode })

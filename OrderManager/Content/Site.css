@@ -27,3 +27,13 @@ textarea {
     font-weight:900;
 
 }
+#CustCount{
+    color:white;
+    padding:2px 5px 2px 5px;
+    border-radius:10px;
+    background-color:green;
+}
+#agact{
+    padding-left:5px;
+    
+}
