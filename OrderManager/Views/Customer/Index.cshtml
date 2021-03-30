@@ -83,7 +83,7 @@
         </td>
         <td>
             @Html.ActionLink("Book an Order", "Book","Order", new { custId=item.CustomerCode },null) |
-            @Html.ActionLink("Edit", "CustForm", new { id=item.CustomerCode }) |
+            @Html.ActionLink("Edit", "CustForm", new { id=item.CustomerCode,agentid=item.AgentCode }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.CustomerCode })
         </td>
     </tr>

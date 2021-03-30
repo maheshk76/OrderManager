@@ -36,7 +36,9 @@
              <th>
             @Html.DisplayNameFor(model => model.AgentName)
         </th>
-        <th></th>
+        <th>
+            All Orders
+        </th>
     </tr>
 
 foreach (var item in Model) {
@@ -60,7 +62,6 @@ foreach (var item in Model) {
             @Html.DisplayFor(modelItem => item.AgentName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OrderNum }) |
             @Html.ActionLink("All Orders", "Details", new { id=item.CustomerCode }) 
         </td>
     </tr>
