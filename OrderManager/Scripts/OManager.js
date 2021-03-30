@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    
     $("#Sdate").on("change", function () {
         $("#Edate").attr("min", $(this).val());
     });
@@ -20,7 +21,7 @@
         LoadData($(this));
     });
 });
-function LoadData(buttonid=null) {
+function LoadData(buttonid=null,sortby=null,sortOrder=null) {
     $.ajax({
         url: '/Order/Orderlist',
         data: {
@@ -31,7 +32,9 @@ function LoadData(buttonid=null) {
             sdate: $("#Sdate").val(),
             edate: $("#Edate").val(),
             cPage: $("#curpageidx").val(),
-            Pagesize:$("#Pagesize").val()
+            Pagesize: $("#Pagesize").val(),
+            sortBy: sortby,
+            sortOrder: sortOrder
         }
     })
         .done(function (response) {
@@ -47,6 +50,9 @@ function LoadData(buttonid=null) {
             if (buttonid!=null)
                 buttonid.attr("disabled", false);
         });
+}
+function Sort(id) {
+    LoadData(buttonid = null, sortby = id, sortOrder = $('#'+id).attr("val"));
 }
 function Goto(index) {
     document.getElementById("curpageidx").value = index;

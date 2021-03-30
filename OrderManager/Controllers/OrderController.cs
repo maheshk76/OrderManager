@@ -84,8 +84,31 @@ namespace OrderManager.Controllers
             
             return RedirectToAction("Index");
         }
-        public ActionResult Orderlist(string search = "", int? custId = 0, int? cityId = 0, string sdate = "", string edate = "", int cPage = 1, int Pagesize = 5)
+        public ActionResult Orderlist(string search = "", int? custId = 0, int? cityId = 0, string sdate = "", string edate = "", int cPage = 1, int Pagesize = 5,string sortBy="fname",string sortOrder="ASC")
         {
+            /*switch (sortBy)
+            {
+                case "fname":
+                    if (sortOrder == "ASC")
+                        ViewBag.NameOrder = "DESC";
+                    else
+                        ViewBag.NameOrder = "ASC";
+                    break;
+                case "oamt":
+                    if (sortOrder == "ASC")
+                        ViewBag.OAmtOrder = "DESC";
+                    else
+                        ViewBag.OAmtOrder = "ASC";
+                    break;
+                case "aamt":
+                    if (sortOrder == "ASC")
+                        ViewBag.AAmtOrder = "DESC";
+                    else
+                        ViewBag.AAmtOrder = "ASC";
+                    break;
+                default:
+                    break;
+            }*/
             //cPage => current Page
             var parameters = new List<object>() {
                 new SqlParameter("@search", search),
@@ -94,7 +117,9 @@ namespace OrderManager.Controllers
                 new SqlParameter("@sdate", sdate),
                 new SqlParameter("@edate", edate),
                 new SqlParameter("@pagesize", Pagesize),
-                new SqlParameter("@pagenum", cPage)
+                new SqlParameter("@pagenum", cPage),
+                new SqlParameter("@sortBy", sortBy),
+                new SqlParameter("@sortOrder", sortOrder),
             };
             var outparam = new SqlParameter
             {
@@ -106,7 +131,7 @@ namespace OrderManager.Controllers
             parameters.Add(outparam);
 
             List<OrderViewModel> OrderList = _context.Database.SqlQuery<OrderViewModel>
-                ("exec GetOrders @search,@custId,@cityId,@sdate,@edate,@pagesize,@pagenum,@possiblerows OUTPUT", parameters.ToArray()).ToList<OrderViewModel>();
+                ("exec GetOrders @search,@custId,@cityId,@sdate,@edate,@pagesize,@pagenum,@sortBy,@sortOrder,@possiblerows OUTPUT", parameters.ToArray()).ToList<OrderViewModel>();
             int possiblerows;
             Debug.WriteLine(outparam.Value);
             if (outparam.Value ==DBNull.Value )

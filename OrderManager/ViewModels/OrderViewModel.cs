@@ -16,6 +16,7 @@ namespace OrderManager.ViewModels
         [Required]
         public Nullable<decimal> AdvanceAmount { get; set; }
         public Nullable<decimal> OpeningAmount { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> OrderDate { get; set; }
         public int CustomerCode { get; set; }
         public string OrderDescription { get; set; }

@@ -18,23 +18,33 @@
     else
     {
         <tr>
-         <th>
-            @Html.DisplayNameFor(model => model.FullName)
+            <th><a id="fname" href="javascript:Sort('fname');" val=@ViewBag.NameOrder>
+            @Html.DisplayNameFor(model => model.FullName)</a>
         </th>
         <th>
+            <a id="oamt" href="javascript:Sort('oamt');" val=@ViewBag.OAmtOrder>
             @Html.DisplayNameFor(model => model.OrderAmount)
+                </a>
         </th>
-        <th>
+        <th >
+            <a id="aamt" href="javascript:Sort('aamt');" val=@ViewBag.AAmtOrder>
             @Html.DisplayNameFor(model => model.AdvanceAmount)
+                </a>
         </th>
-        <th>
+        <th >
+            <a id="odate" href="javascript:Sort('odate');" val=@ViewBag.OdtOrder>
             @Html.DisplayNameFor(model => model.OrderDate)
+                </a>
         </th>
-             <th>
+             <th >
+                 <a id="ct" href="javascript:Sort('ct');" val=@ViewBag.CtOrder>
             @Html.DisplayNameFor(model => model.City)
+                     </a>
         </th>
-             <th>
+             <th id="aname" val="ASC">
+                 <a id="aname" href="javascript:Sort('aname');" val=@ViewBag.AgnmOrder>
             @Html.DisplayNameFor(model => model.AgentName)
+                     </a>
         </th>
         <th>
             All Orders
@@ -62,7 +72,7 @@ foreach (var item in Model) {
             @Html.DisplayFor(modelItem => item.AgentName)
         </td>
         <td>
-            @Html.ActionLink("All Orders", "Details", new { id=item.CustomerCode }) 
+            @Html.ActionLink("All Orders", "Details", new { id = item.CustomerCode }) 
         </td>
     </tr>
 }
