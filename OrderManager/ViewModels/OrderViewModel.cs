@@ -23,5 +23,7 @@ namespace OrderManager.ViewModels
         
         public string City { get; set; }
         public string AgentName { get; set; }
+
+        public int OrderPerDate { get; set; }
     }
 }

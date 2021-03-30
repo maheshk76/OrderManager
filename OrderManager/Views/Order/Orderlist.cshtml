@@ -18,31 +18,31 @@
     else
     {
         <tr>
-            <th><a id="fname" href="javascript:Sort('fname');" val=@ViewBag.NameOrder>
+            <th><a id="fname" href="javascript:Sort('fname');">
             @Html.DisplayNameFor(model => model.FullName)</a>
         </th>
         <th>
-            <a id="oamt" href="javascript:Sort('oamt');" val=@ViewBag.OAmtOrder>
+            <a id="oamt" href="javascript:Sort('oamt');">
             @Html.DisplayNameFor(model => model.OrderAmount)
                 </a>
         </th>
         <th >
-            <a id="aamt" href="javascript:Sort('aamt');" val=@ViewBag.AAmtOrder>
+            <a id="aamt" href="javascript:Sort('aamt');">
             @Html.DisplayNameFor(model => model.AdvanceAmount)
                 </a>
         </th>
         <th >
-            <a id="odate" href="javascript:Sort('odate');" val=@ViewBag.OdtOrder>
+            <a id="odate" href="javascript:Sort('odate');">
             @Html.DisplayNameFor(model => model.OrderDate)
                 </a>
         </th>
              <th >
-                 <a id="ct" href="javascript:Sort('ct');" val=@ViewBag.CtOrder>
+                 <a id="ct" href="javascript:Sort('ct');">
             @Html.DisplayNameFor(model => model.City)
                      </a>
         </th>
-             <th id="aname" val="ASC">
-                 <a id="aname" href="javascript:Sort('aname');" val=@ViewBag.AgnmOrder>
+             <th>
+                 <a id="aname" href="javascript:Sort('aname');">
             @Html.DisplayNameFor(model => model.AgentName)
                      </a>
         </th>
@@ -72,15 +72,19 @@ foreach (var item in Model) {
             @Html.DisplayFor(modelItem => item.AgentName)
         </td>
         <td>
-            @Html.ActionLink("All Orders", "Details", new { id = item.CustomerCode }) 
+        @if (item.OrderPerDate > 1)
+        {
+            @Html.ActionLink("All Orders", "Details", new { id = item.CustomerCode,odate=item.OrderDate }) 
+        
+        }
+        
         </td>
     </tr>
-}
+            
+        }
 
     }
 </table>
-
-
 <table cellpadding="0" cellspacing="0">
     <tr>
 
@@ -100,7 +104,11 @@ foreach (var item in Model) {
         }
     </tr>
 </table>
-<input type="hidden" id="curpageidx" name="cPage" />
+<input type="hidden" id="curpageidx" name="cPage" value=@ViewBag.CurrPage>
+<input type="hidden" id="lastsortby" name="lastsort" value=@ViewBag.SortBy>
+<input type="hidden" id="lastsorto" name="lastsorto" value=@ViewBag.SortOrder>
+
+
 
 
 

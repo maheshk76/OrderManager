@@ -53,6 +53,8 @@ namespace OrderManager.Controllers
         public ActionResult Book(OrderViewModel model)
         {
             var customer = _context.Customers.FirstOrDefault(c => c.CustomerCode == model.CustomerCode);
+            var agent = _context.Agents.FirstOrDefault(a => a.AgentCode == customer.AgentCode);
+
             if (ModelState.IsValid)
             {
 
@@ -77,38 +79,17 @@ namespace OrderManager.Controllers
                 customer.PaymentAmount += model.AdvanceAmount;
                 decimal remainingamount = Convert.ToDecimal(model.OrderAmount - model.AdvanceAmount);
                 customer.OutstandingAmount += remainingamount;
-               // customer.OpeningAmount -= model.AdvanceAmount;
+                customer.ReceivingAmount += (model.OrderAmount) * agent.Commission / 100;
                 _context.Database.ExecuteSqlCommand("exec AddOrder @OrderAmount,@AdvanceAmount,@OrderDate,@CustomerCode,@OrderDesc", parameters.ToArray());
                 _context.SaveChanges();
             }
             
             return RedirectToAction("Index");
         }
-        public ActionResult Orderlist(string search = "", int? custId = 0, int? cityId = 0, string sdate = "", string edate = "", int cPage = 1, int Pagesize = 5,string sortBy="fname",string sortOrder="ASC")
+        public ActionResult Orderlist(string sortOrder="ASC",string search = "", int? custId = 0, int? cityId = 0, string sdate = "", string edate = "", int cPage = 1, int Pagesize = 5, string sortBy="odate")
         {
-            /*switch (sortBy)
-            {
-                case "fname":
-                    if (sortOrder == "ASC")
-                        ViewBag.NameOrder = "DESC";
-                    else
-                        ViewBag.NameOrder = "ASC";
-                    break;
-                case "oamt":
-                    if (sortOrder == "ASC")
-                        ViewBag.OAmtOrder = "DESC";
-                    else
-                        ViewBag.OAmtOrder = "ASC";
-                    break;
-                case "aamt":
-                    if (sortOrder == "ASC")
-                        ViewBag.AAmtOrder = "DESC";
-                    else
-                        ViewBag.AAmtOrder = "ASC";
-                    break;
-                default:
-                    break;
-            }*/
+            ViewBag.SortBy = sortBy;
+            ViewBag.SortOrder = sortOrder;
             //cPage => current Page
             var parameters = new List<object>() {
                 new SqlParameter("@search", search),
@@ -121,6 +102,7 @@ namespace OrderManager.Controllers
                 new SqlParameter("@sortBy", sortBy),
                 new SqlParameter("@sortOrder", sortOrder),
             };
+           
             var outparam = new SqlParameter
             {
                 ParameterName = "possiblerows",
@@ -147,16 +129,19 @@ namespace OrderManager.Controllers
             }
             return PartialView(OrderList);
         }
+        
+        public ActionResult Details(int id,DateTime odate)
+        {
+            odate = odate.Date;
+            List<OrderViewModel> OrderList = _context.Database.SqlQuery<OrderViewModel>
+                ("exec GetAllOrders @custId,@odate", new SqlParameter("@custId", id), new SqlParameter("@odate", odate)).ToList<OrderViewModel>();
+            return View("AllOrders",OrderList);
+        }
         public ActionResult Delete(int id)
         {
-            _context.Database.ExecuteSqlCommand("exec DeleteOrder @OrderId", new SqlParameter("@OrderId", id));
+            _context.Database.ExecuteSqlCommand("exec DeleteOrder @OrderNum"
+                , new SqlParameter("@OrderNum", id));
             return RedirectToAction("Index");
-        }
-        public ActionResult Details(int id)
-        {
-            List<OrderViewModel> OrderList = _context.Database.SqlQuery<OrderViewModel>
-                ("exec GetAllOrders @custId", new SqlParameter("@custId", id)).ToList<OrderViewModel>();
-            return View("AllOrders",OrderList);
         }
     }
 }

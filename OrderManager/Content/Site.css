@@ -22,3 +22,8 @@ select,
 textarea {
     max-width: 280px;
 }
+#arrow{
+    float:right;
+    font-weight:900;
+
+}

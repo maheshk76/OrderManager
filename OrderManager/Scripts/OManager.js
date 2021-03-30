@@ -21,7 +21,7 @@
         LoadData($(this));
     });
 });
-function LoadData(buttonid=null,sortby=null,sortOrder=null) {
+function LoadData(buttonid = null) {
     $.ajax({
         url: '/Order/Orderlist',
         data: {
@@ -33,14 +33,15 @@ function LoadData(buttonid=null,sortby=null,sortOrder=null) {
             edate: $("#Edate").val(),
             cPage: $("#curpageidx").val(),
             Pagesize: $("#Pagesize").val(),
-            sortBy: sortby,
-            sortOrder: sortOrder
+            sortBy: $("#lastsortby").val(),
+            sortOrder: $("#lastsorto").val()
         }
     })
         .done(function (response) {
             console.log(response);
             console.log("success");
             $(".datadiv").html(response);
+            $("#"+$("#lastsortby").val()).after("<span id='arrow'> &#8597;</span>")
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FAIL");
@@ -52,7 +53,13 @@ function LoadData(buttonid=null,sortby=null,sortOrder=null) {
         });
 }
 function Sort(id) {
-    LoadData(buttonid = null, sortby = id, sortOrder = $('#'+id).attr("val"));
+    document.getElementById("lastsortby").value = id;
+    var las = $("#lastsorto").val();
+    if (las == "ASC")
+        $("#lastsorto").val("DESC");
+    else
+        $("#lastsorto").val("ASC");
+    LoadData();
 }
 function Goto(index) {
     document.getElementById("curpageidx").value = index;
