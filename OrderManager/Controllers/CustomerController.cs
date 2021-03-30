@@ -22,10 +22,10 @@ namespace OrderManager.Controllers
             IEnumerable<CustomerViewModel> Customers = _context.Database.SqlQuery<CustomerViewModel>("exec GetCustomer @CustCode",
                new SqlParameter("@CustCode", -1));
             if (agentid == null)
-                return View(Customers);
+                return View(Customers.ToList());
             else
                 Customers = Customers.Where(c => c.AgentCode == agentid);
-                return View(Customers);
+                return View(Customers.ToList());
 
         }
         public ActionResult CustForm(int? id,int? agentid)
@@ -88,5 +88,12 @@ namespace OrderManager.Controllers
                 param.ToArray());
             return RedirectToAction("Index");
         }
+        public ActionResult Delete(int id)
+        {
+            _context.Database.ExecuteSqlCommand("exec DeleteCustomer @custId"
+                , new SqlParameter("@custId", id));
+            return RedirectToAction("Index");
+        }
     }
+    
 }

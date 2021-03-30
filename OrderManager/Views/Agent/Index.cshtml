@@ -1,16 +1,28 @@
 ﻿@model IEnumerable<OrderManager.ViewModels.AgentViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Agents";
 }
 
 <h2>Agent Manager</h2>
 
 
-        <div class=" col-md-2 list-group">
+        <div class="cotainer list-group">
 <a href="@Url.Action("AgentForm","Agent")" class="btn btn-primary">Add Agent</a>
             </div>
-<table class="table">
+
+<hr />
+<table class="table table-bordered table-responsive">
+     @if (!Model.Any())
+     {
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">Info</h4>
+            <h2>No Agents are here!</h2>
+            <hr />
+        </div>
+     }
+     else
+     {
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.AgentName)
@@ -33,7 +45,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+         foreach (var item in Model)
+         {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.AgentName)
@@ -53,14 +66,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.CustCount)
             <br />
-            @Html.ActionLink("New", "CustForm","Customer", new { agentid=item.AgentCode },null) |
-            @Html.ActionLink("List", "Index","Customer", new { agentid=item.AgentCode },null)
+            @Html.ActionLink("New", "CustForm", "Customer", new { agentid = item.AgentCode }, null) |
+            @Html.ActionLink("List", "Index", "Customer", new { agentid = item.AgentCode }, null)
         </td>
         <td>
-            @Html.ActionLink("Edit", "AgentForm", new { id=item.AgentCode }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AgentCode })
+            @Html.ActionLink("Edit", "AgentForm", new { id = item.AgentCode }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.AgentCode })
         </td>
     </tr>
-}
-
+         }
+     }
 </table>

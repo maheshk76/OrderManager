@@ -75,9 +75,13 @@ foreach (var item in Model) {
         @if (item.OrderPerDate > 1)
         {
             @Html.ActionLink("All Orders", "Details", new { id = item.CustomerCode,odate=item.OrderDate }) 
-        
+
         }
-        
+        else
+        {
+            @Html.ActionLink("Details", "Details", new { id = item.CustomerCode,odate=item.OrderDate }) 
+
+        }
         </td>
     </tr>
             

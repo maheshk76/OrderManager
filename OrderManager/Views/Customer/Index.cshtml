@@ -1,92 +1,104 @@
 ﻿@model IEnumerable<OrderManager.ViewModels.CustomerViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Customers";
 }
 
 <h2>Index</h2>
 
 
 <table class="table table-bordered table-responsive">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AgentName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WorkingArea)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model =>model.Country)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Grade)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OpeningAmount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReceivingAmount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PaymentAmount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OutstandingAmount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>Actions</th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AgentName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WorkingArea)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Country)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Grade)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OpeningAmount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReceivingAmount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentAmount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OutstandingAmount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNo)
-        </td>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.ActionLink("Book an Order", "Book","Order", new { custId=item.CustomerCode },null) |
-            @Html.ActionLink("Edit", "CustForm", new { id=item.CustomerCode,agentid=item.AgentCode }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CustomerCode })
-        </td>
-    </tr>
-}
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">Info</h4>
+            <h2>No customers are here!</h2>
+            <hr />
+        </div>
+    }
+    else
+    {
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AgentName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WorkingArea)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Country)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Grade)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OpeningAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReceivingAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PaymentAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OutstandingAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>Actions</th>
+            </tr>
+        foreach (var item in Model)
+        {
+            
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AgentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkingArea)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpeningAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceivingAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OutstandingAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNo)
+                </td>
 
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.ActionLink("Book an Order", "Book", "Order", new { custId = item.CustomerCode }, null) |
+                    @Html.ActionLink("Edit", "CustForm", new { id = item.CustomerCode, agentid = item.AgentCode }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CustomerCode })
+                </td>
+            </tr>
+        }
+    }
 </table>

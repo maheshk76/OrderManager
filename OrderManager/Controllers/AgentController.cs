@@ -67,6 +67,9 @@ namespace OrderManager.Controllers
         }
         public ActionResult Delete(int id)
         {
+            _context.Database.ExecuteSqlCommand("exec DeleteAgent @AgentCode",
+                new SqlParameter("@AgentCode", id));
+
             return RedirectToAction("Index");
         }
     }
