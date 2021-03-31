@@ -12,9 +12,27 @@ namespace OrderManager.Controllers
     public class CustomerController : Controller
     {
         private OrderManagerDBContext _context;
+        IEnumerable<SelectListItem> cities;
+        IEnumerable<SelectListItem> countries;
         public CustomerController()
         {
             _context = new OrderManagerDBContext();
+
+            cities = _context.Cities
+                .Select(c => new SelectListItem
+                {
+                    Value = c.CityId.ToString(),
+                    Text = c.CityName,
+                    Selected = false
+
+                }).ToList();
+           countries = _context.Countries.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name,
+                Selected = false
+
+            }).ToList();
         }
         // GET: Customer
         public ActionResult Index(int? agentid)
@@ -31,36 +49,13 @@ namespace OrderManager.Controllers
         public ActionResult CustForm(int? id,int? agentid)
         {
             EditCustomerViewModel customer = new EditCustomerViewModel();
-            IEnumerable<SelectListItem> cities = _context.Cities
-                .Select(c => new SelectListItem
-            {
-                Value = c.CityId.ToString(),
-                Text = c.CityName,
-                Selected = false
-
-            }).ToList();
-            IEnumerable<SelectListItem> countries = _context.Countries.Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.Name,
-                Selected = false
-
-            }).ToList();
-            IEnumerable<SelectListItem> agents = _context.Agents.Select(c => new SelectListItem
-            {
-                Value = c.AgentCode.ToString(),
-                Text = c.AgentName,
-                Selected = false
-
-            }).ToList();
             if (id == null)
-            {
                 ViewBag.VTitle = "Create";
-            }
             else
             {
                 ViewBag.VTitle = "Edit";
-                customer = _context.Database.SqlQuery<EditCustomerViewModel>("exec GetCustomer @CustCode", new SqlParameter("@CustCode", id)).FirstOrDefault();
+                customer = _context.Database.SqlQuery<EditCustomerViewModel>("exec GetCustomer @CustCode"
+                    ,new SqlParameter("@CustCode", id)).FirstOrDefault();
 
             }
             customer.Countrylist = countries;
@@ -71,6 +66,14 @@ namespace OrderManager.Controllers
         [HttpPost]
         public ActionResult Save(EditCustomerViewModel cust)
         {
+            var agent=_context.Agents.FirstOrDefault(a => a.AgentCode == cust.AgentCode);
+            if (agent == null)
+            {
+                ModelState.AddModelError("", "Agent doesn't exists");
+                cust.Citylist = cities;
+                cust.Countrylist = countries;
+                return View("CustForm", cust);
+            }
             var param = new List<object>(){
                new SqlParameter("@CustCode",cust.CustomerCode),
                new SqlParameter("@FirstName",cust.FirstName),
@@ -84,7 +87,8 @@ namespace OrderManager.Controllers
                new SqlParameter("@AgentCode",cust.AgentCode),
 
             };
-            _context.Database.ExecuteSqlCommand("exec InsertUpdateCustomer @CustCode,@FirstName,@LastName,@CustomerCity,@WorkingArea,@CustomerCountry,@Grade,@OpeningAmount,@PhoneNo,@AgentCode",
+            _context.Database.ExecuteSqlCommand(
+                "exec InsertUpdateCustomer @CustCode,@FirstName,@LastName,@CustomerCity,@WorkingArea,@CustomerCountry,@Grade,@OpeningAmount,@PhoneNo,@AgentCode",
                 param.ToArray());
             return RedirectToAction("Index");
         }

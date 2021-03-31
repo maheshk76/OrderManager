@@ -4,15 +4,12 @@
     ViewBag.Title = ViewBag.VTitle;
 }
 
-<h2>CustForm</h2>
-
-
 @using (Html.BeginForm("Save","Customer",FormMethod.Post)) 
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model=>model.CustomerCode)
     <div class="form-horizontal">
-        <h4>@ViewBag.VTitle</h4>
+        <h2>@ViewBag.VTitle</h2>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

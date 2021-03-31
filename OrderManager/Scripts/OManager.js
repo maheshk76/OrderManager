@@ -7,7 +7,7 @@
         $(this).attr("disabled", true);
         LoadData($(this));
     });
-    $("#Pagesize").on("change", function () {
+    $("#CityId,#CustId,#Pagesize").on("change", function () {
         LoadData();
     });
     $(".clear-btn").on("click", function () {
@@ -17,6 +17,8 @@
         $("#Sdate").val('');
         $("#Edate").val('');
         $("#curpageidx").val('');
+        $("#lastsortby").val('odate');
+        $("#lastsorto").val('ASC');
         $(this).attr("disabled", true);
         LoadData($(this));
     });

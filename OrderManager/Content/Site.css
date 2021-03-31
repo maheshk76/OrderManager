@@ -17,15 +17,20 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
+
+input:not(#Search),select,textarea {
     max-width: 280px;
 }
-#arrow{
-    float:right;
-    font-weight:900;
-
+#Search{
+    max-width:720px;
+}
+#Pagesize{
+   float:right;
+   max-width:65px;
+}
+#arrow {
+    float: right;
+    font-weight: 900;
 }
 #CustCount{
     color:white;

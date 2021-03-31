@@ -27,12 +27,19 @@ namespace OrderManager.ViewModels
     }
     public class EditCustomerViewModel {
         public int CustomerCode { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
         public string WorkingArea { get; set; }
+        [Required]
         public string Grade { get; set; }
+        [Required]
         public Nullable<decimal> OpeningAmount { get; set; }
+        [Required]
         public string PhoneNo { get; set; }
+        [Required]
         public Nullable<int> AgentCode { get; set; }
         [Display(Name ="City")]
         public int CustomerCity { get; set; }

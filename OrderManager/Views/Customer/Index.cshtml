@@ -4,10 +4,10 @@
     ViewBag.Title = "Customers";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
-
-<table class="table table-bordered table-responsive">
+<hr />
+<table class="table table-bordered table-responsive table-hover table-striped">
 
     @if (!Model.Any())
     {
@@ -20,7 +20,7 @@
     else
     {
         <tr>
-                <th>
+                <th class="bg-info">
                     @Html.DisplayNameFor(model => model.AgentName)
                 </th>
                 <th>

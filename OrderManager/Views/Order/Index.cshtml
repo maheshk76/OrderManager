@@ -7,45 +7,42 @@
 
 <h2>Orders</h2>
 <hr />
-<div class="row container col-lg-offset-2 filters">
-     <div class="row list-group col-lg-12">
-         <div class="col-md-5">
-
-            @Html.EditorFor(model => model.Search, new { htmlAttributes = new { @placeholder = "Search", @class = "form-control" } })
-        </div>
-        
-    </div>
-    <div class="row col-lg-12 list-group">
+<div class=" container filters">
+     
+    <div class="row form-group">
        <div class="col-md-3">
             @Html.LabelFor(model => model.Sdate)
-            @Html.TextBoxFor(model => model.Sdate, new { @max = DateTime.Now.Date.ToString("yyyy-MM-dd"), @placeholder = "SDate", @type = "date", @class = "form-control" })
+            @Html.TextBoxFor(model => model.Sdate, new { @max = DateTime.Now.Date.ToString("yyyy-MM-dd"),@type = "date", @class = "form-control" })
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             @Html.LabelFor(model => model.Edate)
-            @Html.TextBoxFor(model => model.Edate, new { @type = "date", @class = "form-control datepicker" })
+            @Html.TextBoxFor(model => model.Edate, new { @type = "date", @class = "form-control " })
         </div>
-        <div class="col-md-2" >
-            @Html.LabelFor(model=>model.CityId)
+        
+        
+    </div>
+   <div class="row form-group ">
+         <div class="col-md-6">
+            @Html.EditorFor(model => model.Search, new { htmlAttributes = new { @placeholder = "Search", @class = "form-control" } })
+        </div>
+        <div class="col-md-3" >
             @Html.DropDownListFor(model => model.CityId, new SelectList(Model.Cities, "Value", "Text"), "--Select City--", new { @class = "form-control" })
         </div>
         <div class="col-md-3" >
-             @Html.LabelFor(model=>model.CustId)
             @Html.DropDownListFor(model => model.CustId, new SelectList(Model.Customers, "Value", "Text"), "--Select Customer--", new { @class = "form-control" })
         </div>
-        
     </div>
-   
     
-    <div class="row list-group col-lg-12">
+    <div class="row form-group">
         <div class=" col-md-1">
             <input type="button" value="Search" class="btn btn-primary search-btn" />
         </div>
 
         <div class=" col-md-10">
-            <input type="button" value="Clear filters" class="btn btn-danger clear-btn" />
+            <input type="button" value="Clear" class="btn btn-danger clear-btn" />
         </div>
-        <div class=" col-md-1" >
-                @Html.DropDownListFor(model => model.Pagesize, new SelectList(Model.RecordserPage, "Value", "Text"), new { @class = "form-control col-md-2"})
+        <div class=" col-sm-1" >
+                @Html.DropDownListFor(model => model.Pagesize, new SelectList(Model.RecordserPage, "Value", "Text"), new { @class = "form-control"})
             
         </div>
     </div>
